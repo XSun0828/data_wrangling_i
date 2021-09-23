@@ -1,3 +1,3 @@
 # data_wrangling_i
 
-THis is hte repo corresponding to Data Wranling I in P8105.
+This is the repo corresponding to Data Wrangling I in P8105.
