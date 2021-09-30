@@ -20,3 +20,55 @@ pups_df = read_csv("data/FAS_pups.csv")
 pups_df = janitor::clean_names(pups_df)
 ```
 
+```{r}
+select(litters_df, group, litter_number, gd0_weight, pups_born_alive)
+```
+
+```{r}
+select(litters_df, group:gd_of_birth)
+```
+
+```{r}
+select(litters_df, -pups_survive)
+```
+
+```{r}
+select(litters_df, GROUP = group, LiTtEr_NuMbEr = litter_number)
+```
+
+```{r}
+select(litters_df, starts_with("gd"))
+```
+
+```{r}
+select(litters_df, litter_number, pups_survive, everything())
+```
+
+## Pipes
+
+```{r}
+litters_data_raw = read_csv("data/FAS_litters.csv")
+litters_clean_name = janitor::clean_names(litters_data_raw)
+litters_select = select(litters_clean_name, group, pups_survive)
+litters_filter = filter(litters_select, group == "Con7")
+
+litters_df =
+  read_csv("data/FAS_litters.csv") %>% 
+  janitor::clean_names() %>% 
+  select(group, pups_survive) %>% 
+  filter(group == "Con7")
+
+
+litters_df =
+  read_csv("data/FAS_litters.csv") %>% 
+  janitor::clean_names() %>% 
+  select(-pups_survive) %>% 
+  mutate( 
+    weight_change = gd18_weight - gd0_weight,
+    group = str_to_lower(group)
+  ) %>% 
+  drop_na(weight_change) %>% 
+  filter(group %in% c("con7","con8")) %>% 
+  select(litter_number, group, weight_change, everything())
+```
+
